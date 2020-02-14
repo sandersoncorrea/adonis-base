@@ -1,0 +1,33 @@
+import styled from 'styled-components/native';
+
+export const Container = styled.View`
+    flex: 1;
+    padding: 15px;
+    background-color: #fff;
+`;
+
+export const TotalView = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+`;
+
+export const Total = styled.View`
+    flex-direction: column;
+    justify-content: flex-end;
+`;
+
+export const Value = styled.Text`
+    font-size: 25px;
+`;
+export const Desc = styled.Text`
+    font-size: 10px;
+`;
+
+export const Footer = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 5px;
+`;
