@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { Button, Header } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import { Container, Input, Title } from './styles';
 import color from '../../styles/palletecolor';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { ButtonSolid, Header } from '../../components';
 
 class Home extends Component {
     constructor(props) {
@@ -20,7 +21,8 @@ class Home extends Component {
         return (
             <>
                 <Header
-                    leftComponent={
+                    leftComponent={9
+                        \
                         <Button
                             icon={
                                 <Icon
@@ -34,9 +36,6 @@ class Home extends Component {
                         />
                     }
                     rightComponent={<Icon name="cog" size={22} color="#FFF" />}
-                    containerStyle={{
-                        backgroundColor: color.azul3
-                    }}
                 />
                 <Container>
                     <Title>COMANDA/MESA</Title>
@@ -46,16 +45,9 @@ class Home extends Component {
                         autoCorrect={false}
                         maxLength={3}
                     />
-                    <Button
-                        containerStyle={{
-                            marginTop: 20
-                        }}
-                        buttonStyle={{ backgroundColor: color.azul3 }}
+                    <ButtonSolid
+                        color={color.azul3}
                         title="OK"
-                        titleStyle={{
-                            textAlign: 'center',
-                            backgroundColor: color.azul3
-                        }}
                         onPress={this.resetNagivateToComanda}
                     />
                 </Container>

@@ -4,6 +4,7 @@ import { Container, TotalView, Total, Value, Desc, Footer } from './styles';
 import { Header, ListItem, Button } from 'react-native-elements';
 import color from '../../styles/palletecolor';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ButtonSolid from '../../components/ButtonSolid';
 
 const list = [
     {

@@ -3,6 +3,7 @@ import { Image } from 'react-native';
 import { Input, Container } from './styles';
 import { Button } from 'react-native-elements';
 import color from '../../styles/palletecolor';
+import { ButtonSolid, ButtonClear, InputSolid } from '../../components';
 
 class Login extends Component {
     constructor(props) {
@@ -11,7 +12,6 @@ class Login extends Component {
     }
 
     resetNagivateToHome = () => {
-        console.log('resetNagivateToHome');
         const { navigation } = this.props;
         navigation.navigate('Home');
     };
@@ -20,39 +20,17 @@ class Login extends Component {
         return (
             <Container>
                 <Image source={require('../../../assets/minhaempresa.png')} />
-                <Input
-                    placeholder="Usuário"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
-                <Input
+                <InputSolid placeholder="Usuário" />
+                <InputSolid
                     placeholder="Senha"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    returnKeyType="send"
                     onSubmitEditing={this.resetNagivateToHome}
                 />
-                <Button
-                    containerStyle={{
-                        marginTop: 20
-                    }}
-                    buttonStyle={{ backgroundColor: color.azul3 }}
-                    title="Entrar"
-                    titleStyle={{
-                        textAlign: 'center',
-                        backgroundColor: color.azul3
-                    }}
+                <ButtonSolid
+                    color={color.azul3}
                     onPress={this.resetNagivateToHome}
+                    title="Entrar"
                 />
-                <Button
-                    title="Esqueci minha senha"
-                    type="clear"
-                    titleStyle={{
-                        color: color.preto2,
-                        fontWeight: 'normal',
-                        fontSize: 10
-                    }}
-                />
+                <ButtonClear title="Esqueci minha senha" color={color.preto2} />
             </Container>
         );
     }

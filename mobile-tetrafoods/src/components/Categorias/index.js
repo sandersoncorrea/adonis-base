@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, TabsContainer, TabItem, TabText } from './styles';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon, { FontAwesome, MaterialIcons } from 'react-native-vector-icons';
 import color from '../../styles/palletecolor';
 
 export default function Categorias() {
@@ -8,27 +8,35 @@ export default function Categorias() {
         <Container>
             <TabsContainer>
                 <TabItem>
-                    <Icon name="person-add" size={24} color={color.azul3} />
+                    <FontAwesome name="beer" size={50} color={color.azul3} />
                     <TabText>Bebidas</TabText>
                 </TabItem>
                 <TabItem>
-                    <Icon
-                        name="chat-bubble-outline"
-                        size={24}
+                    <MaterialIcons
+                        name="local-pizza"
+                        size={50}
                         color={color.azul3}
                     />
                     <TabText>Massas</TabText>
                 </TabItem>
                 <TabItem>
-                    <Icon name="arrow-downward" size={24} color={color.azul3} />
+                    <MaterialIcons
+                        name="fastfood"
+                        size={50}
+                        color={color.azul3}
+                    />
                     <TabText>Lanches</TabText>
                 </TabItem>
                 <TabItem>
-                    <Icon name="arrow-upward" size={24} color={color.azul3} />
+                    <FontAwesome
+                        name="arrow-upward"
+                        size={50}
+                        color={color.azul3}
+                    />
                     <TabText>Doces</TabText>
                 </TabItem>
                 <TabItem>
-                    <Icon name="lock" size={24} color="#FFF" />
+                    <FontAwesome name="lock" size={50} color="#FFF" />
                     <TabText>Peixes</TabText>
                 </TabItem>
             </TabsContainer>

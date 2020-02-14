@@ -20,7 +20,8 @@ export const TabItem = styled.View`
     margin-right: 10px;
     padding: 10px;
     justify-content: space-between;
-    border: 1px solid ${color.azul3};
+    align-items: center;
+    border: 2px solid ${color.azul3};
 `;
 
 export const TabText = styled.Text`

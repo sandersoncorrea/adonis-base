@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { Text, FlatList } from 'react-native';
 import api from '../../services/api';
 import { Container, Title } from './styles';
-import { Header, ListItem, SearchBar, Button } from 'react-native-elements';
+import { Header, ListItem, SearchBar } from 'react-native-elements';
 import color from '../../styles/palletecolor';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Categorias from '../../components/Categorias';
+import { ButtonSolid, Categorias } from '../../components';
 
 const list = [
     {
@@ -78,7 +78,6 @@ class Itens extends Component {
     }
 
     getGrupos = async () => {
-        console.log('getGrupos');
         const response = await api.get('grupos');
         this.setState({ grupos: response.data });
     };
@@ -111,13 +110,7 @@ class Itens extends Component {
                         data={list}
                         renderItem={this.renderItem}
                     />
-                    <Button
-                        buttonStyle={{
-                            backgroundColor: color.azul3
-                        }}
-                        color={color.azul3}
-                        title="Fechar Pedido"
-                    />
+                    <ButtonSolid color={color.azul3} title="Fechar Pedido" />
                     <Categorias />
                 </Container>
             </>
