@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Text, FlatList } from 'react-native';
 import api from '../../services/api';
 import { Container, Title } from './styles';
-import { Header, ListItem, SearchBar } from 'react-native-elements';
+import { ListItem, SearchBar, Button } from 'react-native-elements';
 import color from '../../styles/palletecolor';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { ButtonSolid, Categorias } from '../../components';
+import { ButtonSolid, Categorias, Header } from '../../components';
 
 const list = [
     {
@@ -99,7 +99,17 @@ class Itens extends Component {
             <>
                 <Header
                     leftComponent={
-                        <Icon name="chevron-left" size={20} color="#FFF" />
+                        <Button
+                            icon={
+                                <Icon
+                                    name="chevron-left"
+                                    size={20}
+                                    color="#FFF"
+                                />
+                            }
+                            type="clear"
+                            onPress={() => this.props.navigation.goBack(null)}
+                        />
                     }
                     rightComponent={
                         <Text
@@ -109,12 +119,9 @@ class Itens extends Component {
                                 fontWeight: 'bold'
                             }}
                         >
-                            nº 99
+                            nº 96
                         </Text>
                     }
-                    containerStyle={{
-                        backgroundColor: color.azul3
-                    }}
                 />
                 <Container>
                     <SearchBar

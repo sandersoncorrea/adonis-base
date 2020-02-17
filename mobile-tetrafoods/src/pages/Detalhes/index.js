@@ -1,87 +1,127 @@
 import React, { Component } from 'react';
-import { Text, FlatList } from 'react-native';
-import api from '../../services/api';
-import { Container, Title, Buttons } from './styles';
-import { Header, ListItem, SearchBar } from 'react-native-elements';
+import { Text, FlatList, View, Button, Alert } from 'react-native';
+import {
+    Container,
+    Title,
+    Buttons,
+    ListViewSubtitle,
+    ListViewTitle,
+    ListViewSubtitleFirst
+} from './styles';
+import { ListItem, Button as BtnElements } from 'react-native-elements';
 import color from '../../styles/palletecolor';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { ButtonSolid, Categorias, ButtonOutline } from '../../components';
+import {
+    ButtonSolid,
+    ButtonOutline,
+    ButtonClear,
+    ButtonMenos,
+    ButtonMais,
+    ButtonX,
+    ButtonDetalhes,
+    Header
+} from '../../components';
+import Modal from 'react-native-modal';
+import ModalDetalhes from '../ModalDetalhes';
 
 const list = [
     {
         name: 'Cerveja Skol 350ml',
         value: 'R$ 19,98',
-        desc: '2 x R$ 9,99'
+        desc: '2 x R$ 9,99',
+        quantidade: 2
     },
     {
         name: 'Cerveja Skol 500ml',
         value: 'R$ 74,95',
-        desc: '5 x 14,99'
+        desc: '5 x 14,99',
+        quantidade: 5
     },
     {
         name: 'Cerveja Skol 350ml',
         value: 'R$ 19,98',
-        desc: '2 x R$ 9,99'
+        desc: '2 x R$ 9,99',
+        quantidade: 2
     },
     {
         name: 'Cerveja Skol 500ml',
         value: 'R$ 74,95',
-        desc: '5 x 14,99'
+        desc: '5 x 14,99',
+        quantidade: 5
     },
     {
         name: 'Cerveja Skol 350ml',
         value: 'R$ 19,98',
-        desc: '2 x R$ 9,99'
+        desc: '2 x R$ 9,99',
+        quantidade: 2
     },
     {
         name: 'Cerveja Skol 500ml',
         value: 'R$ 74,95',
-        desc: '5 x 14,99'
+        desc: '5 x 14,99',
+        quantidade: 5
     },
     {
         name: 'Cerveja Skol 350ml',
         value: 'R$ 19,98',
-        desc: '2 x R$ 9,99'
+        desc: '2 x R$ 9,99',
+        quantidade: 2
     },
     {
         name: 'Cerveja Skol 500ml',
         value: 'R$ 74,95',
-        desc: '5 x 14,99'
+        desc: '5 x 14,99',
+        quantidade: 5
     }
 ];
 
 class Detalhes extends Component {
     state = {
-        grupos: []
+        grupos: [],
+        isModalVisible: false
     };
 
     keyExtractor = (item, index) => index.toString();
 
+    toggleModal = () => {
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    };
+
     renderItem = ({ item }) => (
         <ListItem
-            title={item.name}
-            subtitle={item.value}
+            title={
+                <ListViewTitle>
+                    <Text style={{ fontSize: 20, marginBottom: 5 }}>
+                        {item.name}
+                    </Text>
+                    <ButtonX />
+                </ListViewTitle>
+            }
+            subtitle={
+                <ListViewSubtitle>
+                    <ListViewSubtitleFirst>
+                        <Text style={{ color: color.azul3, marginRight: 4 }}>
+                            {item.value}
+                        </Text>
+                        <ButtonMenos />
+                        <Text
+                            style={{
+                                color: color.azul3,
+                                marginRight: 4,
+                                marginLeft: 4
+                            }}
+                        >
+                            {item.quantidade}
+                        </Text>
+                        <ButtonMais />
+                    </ListViewSubtitleFirst>
+                    <ButtonDetalhes onPress={this.toggleModal} />
+                </ListViewSubtitle>
+            }
             subtitleStyle={{ color: color.azul2 }}
-            leftAvatar={{
-                source: item.avatar_url && { uri: item.avatar_url },
-                title: item.name[0]
-            }}
             bottomDivider
         />
     );
-
-    async componentDidMount() {
-        try {
-            this.getGrupos();
-        } catch (e) {
-            console.log({ error: e });
-        }
-    }
-
-    getGrupos = async () => {
-        const response = await api.get('grupos');
-        this.setState({ grupos: response.data });
-    };
 
     resetNagivateToObservacao = () => {
         const { navigation } = this.props;
@@ -98,7 +138,17 @@ class Detalhes extends Component {
             <>
                 <Header
                     leftComponent={
-                        <Icon name="chevron-left" size={20} color="#FFF" />
+                        <BtnElements
+                            icon={
+                                <Icon
+                                    name="chevron-left"
+                                    size={20}
+                                    color="#FFF"
+                                />
+                            }
+                            type="clear"
+                            onPress={() => this.props.navigation.goBack(null)}
+                        />
                     }
                     rightComponent={
                         <Text
@@ -108,12 +158,9 @@ class Detalhes extends Component {
                                 fontWeight: 'bold'
                             }}
                         >
-                            nº 99
+                            nº 98
                         </Text>
                     }
-                    containerStyle={{
-                        backgroundColor: color.azul3
-                    }}
                 />
                 <Container>
                     <Title>Detalhes</Title>
@@ -134,7 +181,15 @@ class Detalhes extends Component {
                             title="Adicionar mais"
                         />
                     </Buttons>
+                    <ButtonClear
+                        onPress={this.resetNagivateToItens}
+                        color={color.laranja}
+                        title="Abandonar Pedido"
+                    />
                 </Container>
+                <Modal isVisible={this.state.isModalVisible}>
+                    <ModalDetalhes onPress={this.toggleModal} />
+                </Modal>
             </>
         );
     }

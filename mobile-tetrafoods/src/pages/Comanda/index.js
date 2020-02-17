@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { Container, TotalView, Total, Value, Desc, Footer } from './styles';
-import { Header, ListItem, Button } from 'react-native-elements';
+import { ListItem, Button } from 'react-native-elements';
 import color from '../../styles/palletecolor';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ButtonSolid from '../../components/ButtonSolid';
+import { Header } from '../../components';
 
 const list = [
     {
@@ -107,11 +107,16 @@ class Comanda extends Component {
                         />
                     }
                     rightComponent={
-                        <Text style={{ color: '#FFF' }}>nº 99</Text>
+                        <Text
+                            style={{
+                                color: '#FFF',
+                                fontSize: 20,
+                                fontWeight: 'bold'
+                            }}
+                        >
+                            nº 96
+                        </Text>
                     }
-                    containerStyle={{
-                        backgroundColor: color.azul3
-                    }}
                 />
                 <Container>
                     <TotalView>

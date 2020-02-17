@@ -1,15 +1,18 @@
 import React from 'react';
 import { Button } from 'react-native-elements';
+import color from '../../styles/palletecolor';
 
 export default class ButtonSolid extends React.Component {
     render() {
-        const { color, title, onPress, icon } = this.props;
+        const { title, onPress, icon } = this.props;
 
         return (
             <Button
                 buttonStyle={{
-                    backgroundColor: color,
+                    backgroundColor: color.azul3,
                     borderRadius: 5,
+                    borderWidth: 2,
+                    borderColor: color.azul4,
                     width: '100%',
                     paddingBottom: 10,
                     paddingTop: 9

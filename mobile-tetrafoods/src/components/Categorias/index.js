@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, TabsContainer, TabItem, TabText } from './styles';
-import Icon, { FontAwesome, MaterialIcons } from 'react-native-vector-icons';
+import { FontAwesome, MaterialIcons } from 'react-native-vector-icons';
 import color from '../../styles/palletecolor';
 
 export default function Categorias() {

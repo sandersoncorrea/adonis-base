@@ -21,7 +21,7 @@ export default class ButtonText extends React.Component {
                     marginRight: 3,
                     marginTop: 5
                 }}
-                titleStyle={{ color }}
+                titleStyle={{ color: '#252323' }}
                 onPress={onPress}
                 title={title}
                 icon={icon}
