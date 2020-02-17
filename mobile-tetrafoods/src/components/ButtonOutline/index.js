@@ -9,11 +9,19 @@ export default class ButtonText extends React.Component {
             <Button
                 type="outline"
                 buttonStyle={{
-                    backgroundColor: color,
+                    backgroundColor: 'transparent',
                     borderRadius: 5,
+                    borderWidth: 2,
+                    borderColor: color,
+                    width: '100%'
+                }}
+                containerStyle={{
                     marginBottom: 5,
+                    marginLeft: 3,
+                    marginRight: 3,
                     marginTop: 5
                 }}
+                titleStyle={{ color }}
                 onPress={onPress}
                 title={title}
                 icon={icon}

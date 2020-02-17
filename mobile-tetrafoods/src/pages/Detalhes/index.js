@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Text, FlatList } from 'react-native';
 import api from '../../services/api';
-import { Container, Title } from './styles';
+import { Container, Title, Buttons } from './styles';
 import { Header, ListItem, SearchBar } from 'react-native-elements';
 import color from '../../styles/palletecolor';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { ButtonSolid, Categorias } from '../../components';
+import { ButtonSolid, Categorias, ButtonOutline } from '../../components';
 
 const list = [
     {
@@ -50,7 +50,7 @@ const list = [
     }
 ];
 
-class Itens extends Component {
+class Detalhes extends Component {
     state = {
         grupos: []
     };
@@ -67,7 +67,6 @@ class Itens extends Component {
                 title: item.name[0]
             }}
             bottomDivider
-            onPress={this.resetNagivateToDetalhes}
         />
     );
 
@@ -84,14 +83,14 @@ class Itens extends Component {
         this.setState({ grupos: response.data });
     };
 
-    resetNagivateToComanda = () => {
+    resetNagivateToObservacao = () => {
         const { navigation } = this.props;
-        navigation.navigate('Comanda');
+        navigation.navigate('Observacao');
     };
 
-    resetNagivateToDetalhes = () => {
+    resetNagivateToItens = () => {
         const { navigation } = this.props;
-        navigation.navigate('Detalhes');
+        navigation.navigate('Itens');
     };
 
     render() {
@@ -117,29 +116,28 @@ class Itens extends Component {
                     }}
                 />
                 <Container>
-                    <SearchBar
-                        placeholder="Pesquisar"
-                        lightTheme
-                        containerStyle={{
-                            backgroundColor: 'transparent'
-                        }}
-                    />
-                    <Title>Bebidas</Title>
+                    <Title>Detalhes</Title>
                     <FlatList
                         keyExtractor={this.keyExtractor}
                         data={list}
                         renderItem={this.renderItem}
                     />
-                    <ButtonSolid
-                        onPress={this.resetNagivateToComanda}
-                        color={color.azul3}
-                        title="Fechar Pedido"
-                    />
-                    <Categorias />
+                    <Buttons>
+                        <ButtonSolid
+                            onPress={this.resetNagivateToItens}
+                            color={color.azul3}
+                            title="Concluir"
+                        />
+                        <ButtonOutline
+                            onPress={this.resetNagivateToItens}
+                            color={color.azul3}
+                            title="Adicionar mais"
+                        />
+                    </Buttons>
                 </Container>
             </>
         );
     }
 }
 
-export default Itens;
+export default Detalhes;

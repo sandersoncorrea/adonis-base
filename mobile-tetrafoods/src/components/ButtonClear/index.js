@@ -11,7 +11,15 @@ export default class ButtonText extends React.Component {
                 titleStyle={{
                     color: color.preto2,
                     fontWeight: 'normal',
-                    fontSize: 10
+                    fontSize: 10,
+                    width: '100%',
+                    borderRadius: 5
+                }}
+                containerStyle={{
+                    marginBottom: 5,
+                    marginLeft: 3,
+                    marginRight: 3,
+                    marginTop: 5
                 }}
                 icon={icon}
                 onPress={onPress}

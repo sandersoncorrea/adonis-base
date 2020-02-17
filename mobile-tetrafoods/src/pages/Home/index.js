@@ -21,8 +21,7 @@ class Home extends Component {
         return (
             <>
                 <Header
-                    leftComponent={9
-                        \
+                    leftComponent={
                         <Button
                             icon={
                                 <Icon

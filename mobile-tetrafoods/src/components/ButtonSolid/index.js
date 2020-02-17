@@ -10,7 +10,14 @@ export default class ButtonSolid extends React.Component {
                 buttonStyle={{
                     backgroundColor: color,
                     borderRadius: 5,
+                    width: '100%',
+                    paddingBottom: 10,
+                    paddingTop: 9
+                }}
+                containerStyle={{
                     marginBottom: 5,
+                    marginLeft: 3,
+                    marginRight: 3,
                     marginTop: 5
                 }}
                 onPress={onPress}
