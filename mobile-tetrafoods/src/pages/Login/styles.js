@@ -7,10 +7,12 @@ export const Container = styled.View`
     padding: 30px;
     justify-content: center;
     align-content: center;
+    flex-direction: column;
+    background-color: #fff;
 `;
 
 export const Input = styled.TextInput`
-    background: #fff;
+    background-color: #fff;
     border-radius: 5px;
     padding: 0 15px;
     text-align: center;

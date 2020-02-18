@@ -23,6 +23,7 @@ import {
 } from '../../components';
 import Modal from 'react-native-modal';
 import ModalDetalhes from '../ModalDetalhes';
+import ModalConfirmar from '../ModalConfirmar';
 
 const list = [
     {
@@ -78,13 +79,20 @@ const list = [
 class Detalhes extends Component {
     state = {
         grupos: [],
-        isModalVisible: false
+        isModalVisible: false,
+        isModalConfirmarVisible: false
     };
 
     keyExtractor = (item, index) => index.toString();
 
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
+    };
+
+    toggleModalConfirmar = () => {
+        this.setState({
+            isModalConfirmarVisible: !this.state.isModalConfirmarVisible
+        });
     };
 
     renderItem = ({ item }) => (
@@ -182,13 +190,18 @@ class Detalhes extends Component {
                         />
                     </Buttons>
                     <ButtonClear
-                        onPress={this.resetNagivateToItens}
-                        color={color.laranja}
+                        onPress={this.toggleModalConfirmar}
                         title="Abandonar Pedido"
                     />
                 </Container>
                 <Modal isVisible={this.state.isModalVisible}>
                     <ModalDetalhes onPress={this.toggleModal} />
+                </Modal>
+                <Modal isVisible={this.state.isModalConfirmarVisible}>
+                    <ModalConfirmar
+                        onPressSim={this.toggleModalConfirmar}
+                        onPressNao={this.toggleModalConfirmar}
+                    />
                 </Modal>
             </>
         );

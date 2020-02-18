@@ -11,27 +11,29 @@ export const Header = styled.View`
 `;
 export const Container = styled.View`
     flex: 1;
-    padding: 30px;
+    padding: 50px;
     justify-content: center;
     flex-direction: column;
+    background-color: #fff;
 `;
 
 export const Title = styled.Text`
     text-align: center;
     padding-bottom: 5px;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
 `;
 
 export const Input = styled.TextInput`
     height: 140px;
-    width: 190px;
+    width: 100%;
     background: #fff;
     border-radius: 5px;
     padding: 0 15px;
     font-size: 90px;
     text-align: center;
     border: 1px solid ${color.preto1};
+    margin: 10px auto;
 `;
 
 export const SubmitButton = styled(RectButton)`

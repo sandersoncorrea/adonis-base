@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text, FlatList, TextInput } from 'react-native';
+import { Text, FlatList, TextInput, Modal } from 'react-native';
 import { Container, Title, Subtitle } from './styles';
 import { CheckBox } from 'react-native-elements';
 import { ButtonSolid } from '../../components';
+import ModalConfirmar from '../ModalConfirmar';
 
 const list = [
     {
@@ -14,6 +15,14 @@ const list = [
 ];
 
 export default class ModalDetalhes extends Component {
+    state = {
+        isModalVisible: false
+    };
+
+    toggleModal = () => {
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    };
+
     renderItem = ({ item }) => (
         <CheckBox
             title={item.name}

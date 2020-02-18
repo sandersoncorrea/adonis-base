@@ -68,6 +68,7 @@ class Itens extends Component {
             }}
             bottomDivider
             onPress={this.resetNagivateToDetalhes}
+            chevron
         />
     );
 

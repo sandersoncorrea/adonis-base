@@ -81,10 +81,6 @@ class Comanda extends Component {
             title={item.name}
             rightTitle={item.value}
             rightSubtitle={item.desc}
-            // leftAvatar={{
-            //     source: item.avatar_url && { uri: item.avatar_url },
-            //     title: item.name[0]
-            // }}
             bottomDivider
         />
     );

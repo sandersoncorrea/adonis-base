@@ -21,6 +21,8 @@ export default class HeaderSolid extends React.Component {
                 leftComponent={leftComponent}
                 rightComponent={rightComponent}
                 containerStyle={{
+                    paddingTop: 0,
+                    paddingBottom: 0,
                     backgroundColor: color.azul3
                 }}
             />

@@ -19,10 +19,13 @@ class Login extends Component {
     render() {
         return (
             <Container>
-                <Image source={require('../../../assets/minhaempresa.png')} />
-                <InputSolid placeholder="Usuário" />
+                <Image
+                    style={{ marginRight: 'auto', marginLeft: 'auto' }}
+                    source={require('../../../assets/minhaempresa.png')}
+                />
+                <InputSolid placeholder="Digite seu usuário ou e-mail" />
                 <InputSolid
-                    placeholder="Senha"
+                    placeholder="Digite sua senha"
                     onSubmitEditing={this.resetNagivateToHome}
                 />
                 <ButtonSolid

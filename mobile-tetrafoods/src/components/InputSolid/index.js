@@ -3,7 +3,7 @@ import { Input } from './styles';
 
 export default class InputSolid extends React.Component {
     render() {
-        const { placeholder, onSubmitEditing } = this.props;
+        const { placeholder, onSubmitEditing, icon } = this.props;
 
         return (
             <Input
@@ -12,6 +12,7 @@ export default class InputSolid extends React.Component {
                 autoCorrect={false}
                 returnKeyType="send"
                 onSubmitEditing={onSubmitEditing}
+                style={{ textAlign: 'left', fontSize: 15, height: 40 }}
             />
         );
     }

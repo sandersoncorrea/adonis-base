@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button } from 'react-native-elements';
+import color from '../../styles/palletecolor';
 
 export default class ButtonText extends React.Component {
     render() {
-        const { color, title, onPress, icon } = this.props;
+        const { title, onPress, icon } = this.props;
 
         return (
             <Button
@@ -12,14 +13,10 @@ export default class ButtonText extends React.Component {
                     color: color.preto2,
                     fontWeight: 'normal',
                     fontSize: 10,
-                    width: '100%',
-                    borderRadius: 5
+                    width: '100%'
                 }}
                 containerStyle={{
-                    marginBottom: 5,
-                    marginLeft: 3,
-                    marginRight: 3,
-                    marginTop: 5
+                    margin: 0
                 }}
                 icon={icon}
                 onPress={onPress}
