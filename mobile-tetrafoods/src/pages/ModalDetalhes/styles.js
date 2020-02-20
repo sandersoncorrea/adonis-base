@@ -3,7 +3,7 @@ import color from '../../styles/palletecolor';
 
 export const Container = styled.View`
     flex: 1;
-    padding: 20px 10px;
+    padding: 30px 10px 20px 10px;
     background-color: ${color.azul2};
     border-radius: 10px;
 `;

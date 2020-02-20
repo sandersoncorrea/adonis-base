@@ -37,3 +37,8 @@ export const Buttons = styled.View`
     text-align: center;
     width: 70%;
 `;
+
+export const Badges = styled.View`
+    flex-direction: row;
+    align-items: center;
+`;

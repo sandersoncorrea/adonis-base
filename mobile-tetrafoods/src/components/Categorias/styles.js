@@ -3,7 +3,7 @@ import color from '../../styles/palletecolor';
 
 export const Container = styled.View`
     height: 100px;
-    margin-top: 10px;
+    margin-top: 2px;
 `;
 
 export const TabsContainer = styled.ScrollView.attrs({
@@ -13,11 +13,11 @@ export const TabsContainer = styled.ScrollView.attrs({
 })``;
 
 export const TabItem = styled.View`
-    width: 120px;
+    width: 115px;
     height: 100px;
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
-    margin-right: 10px;
+    border-radius: 5px;
+    margin-right: 8px;
     padding: 10px;
     justify-content: space-between;
     align-items: center;

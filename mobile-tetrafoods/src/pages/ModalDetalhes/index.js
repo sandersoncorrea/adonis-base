@@ -4,6 +4,7 @@ import { Container, Title, Subtitle } from './styles';
 import { CheckBox } from 'react-native-elements';
 import { ButtonSolid } from '../../components';
 import ModalConfirmar from '../ModalConfirmar';
+import color from '../../styles/palletecolor';
 
 const list = [
     {
@@ -35,7 +36,6 @@ export default class ModalDetalhes extends Component {
                 borderWidth: 0
             }}
             textStyle={{ color: '#FFF' }}
-            checkedColor={{ color: '#FFF' }}
         />
     );
 
@@ -62,7 +62,10 @@ export default class ModalDetalhes extends Component {
                         backgroundColor: '#FFF',
                         borderRadius: 5,
                         padding: 10,
-                        marginBottom: 10
+                        marginBottom: 10,
+                        textAlignVertical: 'top',
+                        borderWidth: 2,
+                        borderColor: color.azul3
                     }}
                 />
                 <ButtonSolid title="OK" onPress={onPress} />

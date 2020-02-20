@@ -6,9 +6,10 @@ import {
     Buttons,
     ListViewSubtitle,
     ListViewTitle,
-    ListViewSubtitleFirst
+    ListViewSubtitleFirst,
+    Badges
 } from './styles';
-import { ListItem, Button as BtnElements } from 'react-native-elements';
+import { ListItem, Button as BtnElements, Badge } from 'react-native-elements';
 import color from '../../styles/palletecolor';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
@@ -30,49 +31,57 @@ const list = [
         name: 'Cerveja Skol 350ml',
         value: 'R$ 19,98',
         desc: '2 x R$ 9,99',
-        quantidade: 2
+        quantidade: 2,
+        detalhes: ['C/ limão']
     },
     {
         name: 'Cerveja Skol 500ml',
         value: 'R$ 74,95',
         desc: '5 x 14,99',
-        quantidade: 5
+        quantidade: 5,
+        detalhes: ['Gelado', 'C/ limão']
     },
     {
         name: 'Cerveja Skol 350ml',
         value: 'R$ 19,98',
         desc: '2 x R$ 9,99',
-        quantidade: 2
+        quantidade: 2,
+        detalhes: ['S/ salada']
     },
     {
         name: 'Cerveja Skol 500ml',
         value: 'R$ 74,95',
         desc: '5 x 14,99',
-        quantidade: 5
+        quantidade: 5,
+        detalhes: []
     },
     {
         name: 'Cerveja Skol 350ml',
         value: 'R$ 19,98',
         desc: '2 x R$ 9,99',
-        quantidade: 2
+        quantidade: 2,
+        detalhes: []
     },
     {
         name: 'Cerveja Skol 500ml',
         value: 'R$ 74,95',
         desc: '5 x 14,99',
-        quantidade: 5
+        quantidade: 5,
+        detalhes: []
     },
     {
         name: 'Cerveja Skol 350ml',
         value: 'R$ 19,98',
         desc: '2 x R$ 9,99',
-        quantidade: 2
+        quantidade: 2,
+        detalhes: []
     },
     {
         name: 'Cerveja Skol 500ml',
         value: 'R$ 74,95',
         desc: '5 x 14,99',
-        quantidade: 5
+        quantidade: 5,
+        detalhes: []
     }
 ];
 
@@ -80,7 +89,8 @@ class Detalhes extends Component {
     state = {
         grupos: [],
         isModalVisible: false,
-        isModalConfirmarVisible: false
+        isModalConfirmarVisible: false,
+        count: 2
     };
 
     keyExtractor = (item, index) => index.toString();
@@ -95,6 +105,12 @@ class Detalhes extends Component {
         });
     };
 
+    setCount(value) {
+        this.setState({
+            count: this.state.count + value
+        });
+    }
+
     renderItem = ({ item }) => (
         <ListItem
             title={
@@ -106,25 +122,40 @@ class Detalhes extends Component {
                 </ListViewTitle>
             }
             subtitle={
-                <ListViewSubtitle>
-                    <ListViewSubtitleFirst>
-                        <Text style={{ color: color.azul3, marginRight: 4 }}>
-                            {item.value}
-                        </Text>
-                        <ButtonMenos />
-                        <Text
-                            style={{
-                                color: color.azul3,
-                                marginRight: 4,
-                                marginLeft: 4
-                            }}
-                        >
-                            {item.quantidade}
-                        </Text>
-                        <ButtonMais />
-                    </ListViewSubtitleFirst>
-                    <ButtonDetalhes onPress={this.toggleModal} />
-                </ListViewSubtitle>
+                <View>
+                    <ListViewSubtitle>
+                        <ListViewSubtitleFirst>
+                            <Text
+                                style={{ color: color.azul3, marginRight: 4 }}
+                            >
+                                {item.value}
+                            </Text>
+                            <ButtonMenos onPress={() => this.setCount(-1)} />
+                            <Text
+                                style={{
+                                    color: color.azul3,
+                                    marginRight: 4,
+                                    marginLeft: 4
+                                }}
+                            >
+                                {this.state.count}
+                            </Text>
+                            <ButtonMais onPress={() => this.setCount(1)} />
+                        </ListViewSubtitleFirst>
+                        <ButtonDetalhes onPress={this.toggleModal} />
+                    </ListViewSubtitle>
+                    <Badges>
+                        {item.detalhes.map(d => {
+                            return (
+                                <Badge
+                                    badgeStyle={style.badge}
+                                    status="primary"
+                                    value={d}
+                                />
+                            );
+                        })}
+                    </Badges>
+                </View>
             }
             subtitleStyle={{ color: color.azul2 }}
             bottomDivider
@@ -207,5 +238,13 @@ class Detalhes extends Component {
         );
     }
 }
+
+const style = {
+    badge: {
+        borderColor: color.azul3,
+        backgroundColor: color.azul3,
+        margin: 2
+    }
+};
 
 export default Detalhes;

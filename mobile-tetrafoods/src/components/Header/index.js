@@ -1,10 +1,14 @@
 import React from 'react';
 import { Header, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Text } from 'react-native';
 import color from '../../styles/palletecolor';
+import PropTypes from 'prop-types';
 
 export default class HeaderSolid extends React.Component {
+    static propTypes = {
+        leftComponent: PropTypes.element,
+        rightComponent: PropTypes.element
+    };
     render() {
         const { leftComponent, rightComponent } = this.props;
         if (leftComponent == null) {
@@ -23,7 +27,8 @@ export default class HeaderSolid extends React.Component {
                 containerStyle={{
                     paddingTop: 0,
                     paddingBottom: 0,
-                    backgroundColor: color.azul3
+                    backgroundColor: color.azul3,
+                    height: 50
                 }}
             />
         );

@@ -74,6 +74,11 @@ class Comanda extends Component {
         navigation.navigate('Itens');
     };
 
+    resetNagivateToDetalhes = () => {
+        const { navigation } = this.props;
+        navigation.navigate('Detalhes');
+    };
+
     keyExtractor = (item, index) => index.toString();
 
     renderItem = ({ item }) => (
@@ -136,6 +141,7 @@ class Comanda extends Component {
                             }}
                             color={color.azul3}
                             icon={<Icon name="pencil" size={30} color="#FFF" />}
+                            onPress={this.resetNagivateToDetalhes}
                         />
                         <Button
                             buttonStyle={{

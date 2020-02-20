@@ -17,6 +17,11 @@ class Home extends Component {
         navigation.navigate('Comanda');
     };
 
+    resetNagivateToConfiguracao = () => {
+        const { navigation } = this.props;
+        navigation.navigate('Configuracao');
+    };
+
     render() {
         return (
             <>
@@ -34,7 +39,13 @@ class Home extends Component {
                             onPress={() => this.props.navigation.goBack(null)}
                         />
                     }
-                    rightComponent={<Icon name="cog" size={22} color="#FFF" />}
+                    rightComponent={
+                        <Button
+                            icon={<Icon name="cog" size={22} color="#FFF" />}
+                            type="clear"
+                            onPress={() => this.resetNagivateToConfiguracao()}
+                        />
+                    }
                 />
                 <Container>
                     <Title>COMANDA/MESA</Title>

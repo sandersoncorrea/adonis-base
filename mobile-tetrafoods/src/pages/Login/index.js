@@ -25,6 +25,7 @@ class Login extends Component {
                 />
                 <InputSolid placeholder="Digite seu usuário ou e-mail" />
                 <InputSolid
+                    secureTextEntry={true}
                     placeholder="Digite sua senha"
                     onSubmitEditing={this.resetNagivateToHome}
                 />

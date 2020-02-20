@@ -1,8 +1,14 @@
 import React from 'react';
 import { Button } from 'react-native-elements';
 import color from '../../styles/palletecolor';
+import PropTypes from 'prop-types';
 
 export default class ButtonText extends React.Component {
+    static propTypes = {
+        title: PropTypes.string.isRequired,
+        onPress: PropTypes.func,
+        icon: PropTypes.element
+    };
     render() {
         const { title, onPress, icon } = this.props;
 

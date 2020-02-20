@@ -2,8 +2,12 @@ import React from 'react';
 import { Button } from 'react-native-elements';
 import { FontAwesome } from 'react-native-vector-icons';
 import color from '../../styles/palletecolor';
+import PropTypes from 'prop-types';
 
 export default class ButtonMais extends React.Component {
+    static propTypes = {
+        onPress: PropTypes.func
+    };
     render() {
         const { onPress } = this.props;
 

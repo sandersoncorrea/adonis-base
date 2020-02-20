@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Comanda from './pages/Comanda';
 import Itens from './pages/Itens';
 import Detalhes from './pages/Detalhes';
+import Configuracao from './pages/Configuracao';
 
 const StackConfig = {
     initialRouteName: 'Login',
@@ -31,7 +32,8 @@ const StackNavigator = createStackNavigator(
         Itens: {
             screen: Itens
         },
-        Detalhes
+        Detalhes,
+        Configuracao
     },
     StackConfig
 );
