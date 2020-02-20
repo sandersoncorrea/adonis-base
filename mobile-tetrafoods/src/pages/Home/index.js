@@ -9,7 +9,9 @@ import { ButtonSolid, Header } from '../../components';
 class Home extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            comanda: ''
+        };
     }
 
     resetNagivateToComanda = () => {
@@ -54,8 +56,10 @@ class Home extends Component {
                         autoCapitalize="none"
                         autoCorrect={false}
                         maxLength={3}
+                        onChangeText={comanda => this.setState({ comanda })}
                     />
                     <ButtonSolid
+                        disabled={this.state.comanda == ''}
                         color={color.azul3}
                         title="OK"
                         onPress={this.resetNagivateToComanda}

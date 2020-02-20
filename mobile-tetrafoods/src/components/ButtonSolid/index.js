@@ -7,10 +7,16 @@ export default class ButtonSolid extends React.Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
         onPress: PropTypes.func,
-        icon: PropTypes.element
+        icon: PropTypes.element,
+        disabled: PropTypes.bool
     };
+
+    static defaultProps = {
+        disabled: false
+    };
+
     render() {
-        const { title, onPress, icon } = this.props;
+        const { title, onPress, icon, disabled } = this.props;
 
         return (
             <Button
@@ -30,6 +36,10 @@ export default class ButtonSolid extends React.Component {
                 onPress={onPress}
                 title={title}
                 icon={icon}
+                disabled={disabled}
+                disabledStyle={{
+                    backgroundColor: color.azul2
+                }}
             />
         );
     }
