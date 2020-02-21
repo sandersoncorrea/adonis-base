@@ -3,7 +3,7 @@ import { Button } from 'react-native-elements';
 import color from '../../styles/palletecolor';
 import PropTypes from 'prop-types';
 
-export default class ButtonText extends React.Component {
+export default class ButtonOutline extends React.Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
         onPress: PropTypes.func,
@@ -14,9 +14,8 @@ export default class ButtonText extends React.Component {
 
         return (
             <Button
-                type="outline"
                 buttonStyle={{
-                    backgroundColor: 'transparent',
+                    backgroundColor: 'rgba(255, 255, 255)',
                     borderRadius: 5,
                     borderWidth: 2,
                     borderColor: color.azul3,
@@ -28,8 +27,8 @@ export default class ButtonText extends React.Component {
                     marginRight: 3,
                     marginTop: 5
                 }}
-                titleStyle={{ color: color.preto2 }}
                 onPress={onPress}
+                titleStyle={{ color: color.preto2 }}
                 title={title}
                 icon={icon}
             />

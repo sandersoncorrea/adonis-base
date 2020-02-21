@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Text, FlatList, TouchableOpacity } from 'react-native';
 import api from '../../services/api';
 import {
@@ -16,7 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { ButtonSolid, Header } from '../../components';
 import { Formatter } from '../../utils/str';
 
-export default class Itens extends Component {
+class Itens extends Component {
     state = {
         grupos: [],
         produtos: [],
@@ -35,10 +36,19 @@ export default class Itens extends Component {
                 title: item.nome[0]
             }}
             bottomDivider
-            onPress={this.resetNagivateToDetalhes}
+            onPress={() => this.handleAddProduct(item)}
             chevron
         />
     );
+
+    handleAddProduct = product => {
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'ADD_TO_CART',
+            product
+        });
+        this.resetNagivateToDetalhes();
+    };
 
     async componentDidMount() {
         try {
@@ -164,3 +174,5 @@ export default class Itens extends Component {
         );
     }
 }
+
+export default connect()(Itens);

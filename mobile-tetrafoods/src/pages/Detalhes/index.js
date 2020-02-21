@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Text, FlatList, View, Button, Alert } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import Creators from '../../store/index';
+
+import { Text, FlatList, View } from 'react-native';
 import {
     Container,
     Title,
@@ -9,7 +13,7 @@ import {
     ListViewSubtitleFirst,
     Badges
 } from './styles';
-import { ListItem, Button as BtnElements, Badge } from 'react-native-elements';
+import { ListItem, Button, Badge } from 'react-native-elements';
 import color from '../../styles/palletecolor';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
@@ -26,71 +30,10 @@ import Modal from 'react-native-modal';
 import ModalDetalhes from '../ModalDetalhes';
 import ModalConfirmar from '../ModalConfirmar';
 
-const list = [
-    {
-        name: 'Cerveja Skol 350ml',
-        value: 'R$ 19,98',
-        desc: '2 x R$ 9,99',
-        quantidade: 2,
-        detalhes: ['C/ limão']
-    },
-    {
-        name: 'Cerveja Skol 500ml',
-        value: 'R$ 74,95',
-        desc: '5 x 14,99',
-        quantidade: 5,
-        detalhes: ['Gelado', 'C/ limão']
-    },
-    {
-        name: 'Cerveja Skol 350ml',
-        value: 'R$ 19,98',
-        desc: '2 x R$ 9,99',
-        quantidade: 2,
-        detalhes: ['S/ salada']
-    },
-    {
-        name: 'Cerveja Skol 500ml',
-        value: 'R$ 74,95',
-        desc: '5 x 14,99',
-        quantidade: 5,
-        detalhes: []
-    },
-    {
-        name: 'Cerveja Skol 350ml',
-        value: 'R$ 19,98',
-        desc: '2 x R$ 9,99',
-        quantidade: 2,
-        detalhes: []
-    },
-    {
-        name: 'Cerveja Skol 500ml',
-        value: 'R$ 74,95',
-        desc: '5 x 14,99',
-        quantidade: 5,
-        detalhes: []
-    },
-    {
-        name: 'Cerveja Skol 350ml',
-        value: 'R$ 19,98',
-        desc: '2 x R$ 9,99',
-        quantidade: 2,
-        detalhes: []
-    },
-    {
-        name: 'Cerveja Skol 500ml',
-        value: 'R$ 74,95',
-        desc: '5 x 14,99',
-        quantidade: 5,
-        detalhes: []
-    }
-];
-
 class Detalhes extends Component {
     state = {
-        grupos: [],
         isModalVisible: false,
-        isModalConfirmarVisible: false,
-        count: 2
+        isModalConfirmarVisible: false
     };
 
     keyExtractor = (item, index) => index.toString();
@@ -105,20 +48,21 @@ class Detalhes extends Component {
         });
     };
 
-    setCount(value) {
-        this.setState({
-            count: this.state.count + value
-        });
-    }
-
     renderItem = ({ item }) => (
         <ListItem
             title={
                 <ListViewTitle>
                     <Text style={{ fontSize: 20, marginBottom: 5 }}>
-                        {item.name}
+                        {item.nome}
                     </Text>
-                    <ButtonX />
+                    <ButtonX
+                        onPress={() =>
+                            dispatch({
+                                type: 'REMOVE_FROM_CART',
+                                codigo: item.codigo
+                            })
+                        }
+                    />
                 </ListViewTitle>
             }
             subtitle={
@@ -128,9 +72,9 @@ class Detalhes extends Component {
                             <Text
                                 style={{ color: color.azul3, marginRight: 4 }}
                             >
-                                {item.value}
+                                {item.subtotal}
                             </Text>
-                            <ButtonMenos onPress={() => this.setCount(-1)} />
+                            <ButtonMenos onPress={() => {}} />
                             <Text
                                 style={{
                                     color: color.azul3,
@@ -138,9 +82,9 @@ class Detalhes extends Component {
                                     marginLeft: 4
                                 }}
                             >
-                                {this.state.count}
+                                {item.quantidade}
                             </Text>
-                            <ButtonMais onPress={() => this.setCount(1)} />
+                            <ButtonMais onPress={() => {}} />
                         </ListViewSubtitleFirst>
                         <ButtonDetalhes onPress={this.toggleModal} />
                     </ListViewSubtitle>
@@ -148,6 +92,7 @@ class Detalhes extends Component {
                         {item.detalhes.map(d => {
                             return (
                                 <Badge
+                                    key={d}
                                     badgeStyle={style.badge}
                                     status="primary"
                                     value={d}
@@ -173,11 +118,13 @@ class Detalhes extends Component {
     };
 
     render() {
+        const { cart } = this.props;
+
         return (
             <>
                 <Header
                     leftComponent={
-                        <BtnElements
+                        <Button
                             icon={
                                 <Icon
                                     name="chevron-left"
@@ -205,7 +152,7 @@ class Detalhes extends Component {
                     <Title>Detalhes</Title>
                     <FlatList
                         keyExtractor={this.keyExtractor}
-                        data={list}
+                        data={cart}
                         renderItem={this.renderItem}
                     />
                     <Buttons>
@@ -246,5 +193,10 @@ const style = {
         margin: 2
     }
 };
+const mapStateToProps = state => ({
+    cart: state.cart
+});
+const mapDispatchToProps = dispatch =>
+    bindActionCreators({ ...Creators }, dispatch);
 
-export default Detalhes;
+export default connect(mapStateToProps, mapDispatchToProps)(Detalhes);

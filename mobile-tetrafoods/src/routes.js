@@ -9,7 +9,7 @@ import Detalhes from './pages/Detalhes';
 import Configuracao from './pages/Configuracao';
 
 const StackConfig = {
-    initialRouteName: 'Login',
+    initialRouteName: 'Itens',
     headerTitleAlign: 'center',
     headerMode: 'none'
 };
