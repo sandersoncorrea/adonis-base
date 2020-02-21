@@ -11,20 +11,16 @@ export default function cart(state = [], action) {
 
                 if (productIndex >= 0) {
                     draft[productIndex].quantidade += 1;
-                    const subtotal =
-                        parseFloat(draft[productIndex].custo) *
-                        parseInt(draft[productIndex].quantidade);
-                    draft[productIndex].subtotal = Formatter('M', subtotal);
                 } else {
                     draft.push({
                         ...action.product,
                         quantidade: 1,
-                        subtotal: Formatter('M', action.product.custo),
                         detalhes: []
                     });
                 }
             });
-        case 'REOVE_FROM_CART':
+
+        case 'REMOVE_FROM_CART':
             return produce(state, draft => {
                 const productIndex = draft.findIndex(
                     p => p.codigo === action.codigo
@@ -33,6 +29,20 @@ export default function cart(state = [], action) {
                     draft.splice(productIndex, 1);
                 }
             });
+
+        case 'UPDATE_QUANTIDADE_CART':
+            if (action.quantidade <= 0) {
+                return state;
+            }
+            return produce(state, draft => {
+                const productIndex = draft.findIndex(
+                    p => p.codigo === action.codigo
+                );
+                if (productIndex >= 0) {
+                    draft[productIndex].quantidade = action.quantidade;
+                }
+            });
+
         default:
             return state;
     }

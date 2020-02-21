@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as CartActions from '../../store/modules/cart/actions';
+import { bindActionCreators } from 'redux';
+
 import { Text, FlatList, TouchableOpacity } from 'react-native';
 import api from '../../services/api';
 import {
@@ -42,11 +45,8 @@ class Itens extends Component {
     );
 
     handleAddProduct = product => {
-        const { dispatch } = this.props;
-        dispatch({
-            type: 'ADD_TO_CART',
-            product
-        });
+        const { addToCart } = this.props;
+        addToCart(product);
         this.resetNagivateToDetalhes();
     };
 
@@ -175,4 +175,7 @@ class Itens extends Component {
     }
 }
 
-export default connect()(Itens);
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(CartActions, dispatch);
+
+export default connect(null, mapDispatchToProps)(Itens);

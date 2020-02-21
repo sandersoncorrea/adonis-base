@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Creators from '../../store/index';
+import * as CartActions from '../../store/modules/cart/actions';
 
 import { Text, FlatList, View } from 'react-native';
 import {
@@ -11,7 +11,10 @@ import {
     ListViewSubtitle,
     ListViewTitle,
     ListViewSubtitleFirst,
-    Badges
+    Badges,
+    TotalView,
+    Total,
+    Value
 } from './styles';
 import { ListItem, Button, Badge } from 'react-native-elements';
 import color from '../../styles/palletecolor';
@@ -29,6 +32,8 @@ import {
 import Modal from 'react-native-modal';
 import ModalDetalhes from '../ModalDetalhes';
 import ModalConfirmar from '../ModalConfirmar';
+
+import { Formatter } from '../../utils/str';
 
 class Detalhes extends Component {
     state = {
@@ -48,64 +53,78 @@ class Detalhes extends Component {
         });
     };
 
-    renderItem = ({ item }) => (
-        <ListItem
-            title={
-                <ListViewTitle>
-                    <Text style={{ fontSize: 20, marginBottom: 5 }}>
-                        {item.nome}
-                    </Text>
-                    <ButtonX
-                        onPress={() =>
-                            dispatch({
-                                type: 'REMOVE_FROM_CART',
-                                codigo: item.codigo
-                            })
-                        }
-                    />
-                </ListViewTitle>
-            }
-            subtitle={
-                <View>
-                    <ListViewSubtitle>
-                        <ListViewSubtitleFirst>
-                            <Text
-                                style={{ color: color.azul3, marginRight: 4 }}
-                            >
-                                {item.subtotal}
-                            </Text>
-                            <ButtonMenos onPress={() => {}} />
-                            <Text
-                                style={{
-                                    color: color.azul3,
-                                    marginRight: 4,
-                                    marginLeft: 4
-                                }}
-                            >
-                                {item.quantidade}
-                            </Text>
-                            <ButtonMais onPress={() => {}} />
-                        </ListViewSubtitleFirst>
-                        <ButtonDetalhes onPress={this.toggleModal} />
-                    </ListViewSubtitle>
-                    <Badges>
-                        {item.detalhes.map(d => {
-                            return (
-                                <Badge
-                                    key={d}
-                                    badgeStyle={style.badge}
-                                    status="primary"
-                                    value={d}
+    renderItem = ({ item }) => {
+        const { removeFromCart, updateQuantidade } = this.props;
+
+        return (
+            <ListItem
+                title={
+                    <ListViewTitle>
+                        <Text style={{ fontSize: 20, marginBottom: 5 }}>
+                            {item.nome}
+                        </Text>
+                        <ButtonX onPress={() => removeFromCart(item.codigo)} />
+                    </ListViewTitle>
+                }
+                subtitle={
+                    <View>
+                        <ListViewSubtitle>
+                            <ListViewSubtitleFirst>
+                                <Text
+                                    style={{
+                                        color: color.azul3,
+                                        marginRight: 4
+                                    }}
+                                >
+                                    {item.subtotal}
+                                </Text>
+                                <ButtonMenos
+                                    onPress={() =>
+                                        updateQuantidade(
+                                            item.codigo,
+                                            item.quantidade - 1
+                                        )
+                                    }
                                 />
-                            );
-                        })}
-                    </Badges>
-                </View>
-            }
-            subtitleStyle={{ color: color.azul2 }}
-            bottomDivider
-        />
-    );
+                                <Text
+                                    style={{
+                                        color: color.azul3,
+                                        marginRight: 4,
+                                        marginLeft: 4
+                                    }}
+                                >
+                                    {item.quantidade}
+                                </Text>
+                                <ButtonMais
+                                    onPress={() =>
+                                        updateQuantidade(
+                                            item.codigo,
+                                            item.quantidade + 1
+                                        )
+                                    }
+                                />
+                            </ListViewSubtitleFirst>
+                            <ButtonDetalhes onPress={this.toggleModal} />
+                        </ListViewSubtitle>
+                        <Badges>
+                            {item.detalhes.map(d => {
+                                return (
+                                    <Badge
+                                        key={d}
+                                        badgeStyle={style.badge}
+                                        status="primary"
+                                        value={d}
+                                    />
+                                );
+                            })}
+                        </Badges>
+                    </View>
+                }
+                subtitleStyle={{ color: color.azul2 }}
+                bottomDivider
+            />
+        );
+    };
 
     resetNagivateToObservacao = () => {
         const { navigation } = this.props;
@@ -118,7 +137,7 @@ class Detalhes extends Component {
     };
 
     render() {
-        const { cart } = this.props;
+        const { cart, total } = this.props;
 
         return (
             <>
@@ -150,6 +169,12 @@ class Detalhes extends Component {
                 />
                 <Container>
                     <Title>Detalhes</Title>
+                    <TotalView>
+                        <Text style={{ color: '#aeaeae' }}>subtotal</Text>
+                        <Total>
+                            <Value>{total}</Value>
+                        </Total>
+                    </TotalView>
                     <FlatList
                         keyExtractor={this.keyExtractor}
                         data={cart}
@@ -194,9 +219,21 @@ const style = {
     }
 };
 const mapStateToProps = state => ({
-    cart: state.cart
+    cart: state.cart.map(product => ({
+        ...product,
+        subtotal: Formatter(
+            'M',
+            parseFloat(product.custo) * parseInt(product.quantidade)
+        )
+    })),
+    total: Formatter(
+        'M',
+        state.cart.reduce((total, product) => {
+            return total + product.custo * product.quantidade;
+        }, 0)
+    )
 });
 const mapDispatchToProps = dispatch =>
-    bindActionCreators({ ...Creators }, dispatch);
+    bindActionCreators(CartActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Detalhes);

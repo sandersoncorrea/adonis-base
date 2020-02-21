@@ -42,3 +42,21 @@ export const Badges = styled.View`
     flex-direction: row;
     align-items: center;
 `;
+
+export const TotalView = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
+`;
+
+export const Total = styled.View`
+    flex-direction: column;
+    justify-content: flex-end;
+`;
+
+export const Value = styled.Text`
+    font-size: 25px;
+`;
