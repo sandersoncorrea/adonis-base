@@ -15,7 +15,7 @@ export default class ButtonOutline extends React.Component {
         return (
             <Button
                 buttonStyle={{
-                    backgroundColor: 'rgba(255, 255, 255)',
+                    backgroundColor: '#fff',
                     borderRadius: 5,
                     borderWidth: 2,
                     borderColor: color.azul3,

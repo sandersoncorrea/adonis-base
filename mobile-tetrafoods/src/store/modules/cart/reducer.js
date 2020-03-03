@@ -1,5 +1,4 @@
 import produce from 'immer';
-import { Formatter } from '../../../utils/str';
 
 export default function cart(state = [], action) {
     switch (action.type) {
@@ -42,6 +41,9 @@ export default function cart(state = [], action) {
                     draft[productIndex].quantidade = action.quantidade;
                 }
             });
+
+        case 'CLEAN_CART':
+            return [];
 
         default:
             return state;

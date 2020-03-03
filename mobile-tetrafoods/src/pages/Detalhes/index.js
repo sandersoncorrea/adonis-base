@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as CartActions from '../../store/modules/cart/actions';
 
-import { Text, FlatList, View } from 'react-native';
+import { Text, FlatList, View, Alert } from 'react-native';
 import {
     Container,
     Title,
@@ -34,6 +34,7 @@ import ModalDetalhes from '../ModalDetalhes';
 import ModalConfirmar from '../ModalConfirmar';
 
 import { Formatter } from '../../utils/str';
+import api from '../../services/api';
 
 class Detalhes extends Component {
     state = {
@@ -136,8 +137,40 @@ class Detalhes extends Component {
         navigation.navigate('Itens');
     };
 
+    concluirAdicaoItens = () => {
+        const { cart, navigation } = this.props;
+        if (cart == null || cart.length == 0) {
+            navigation.navigate('Comanda');
+        } else {
+            Alert.alert(
+                'Novos itens',
+                'Deseja adicionar esses itens à comanda?',
+                [
+                    {
+                        text: 'Sim',
+                        onPress: () => this.saveItensToComanda()
+                    },
+                    {
+                        text: 'Não',
+                        onPress: () => {}
+                    }
+                ],
+                { cancelable: true }
+            );
+        }
+    };
+
+    saveItensToComanda = async () => {
+        const { cart, navigation, comanda, cleanCart } = this.props;
+        cart.map(d => (d.davpre = comanda.codigo));
+        const response = await api.post('/davpreitens', cart);
+        console.tron.log({ response: response.data });
+        cleanCart();
+        navigation.navigate('Comanda');
+    };
+
     render() {
-        const { cart, total } = this.props;
+        const { cart, total, numero } = this.props;
 
         return (
             <>
@@ -163,7 +196,7 @@ class Detalhes extends Component {
                                 fontWeight: 'bold'
                             }}
                         >
-                            nº 98
+                            {numero}
                         </Text>
                     }
                 />
@@ -182,12 +215,12 @@ class Detalhes extends Component {
                     />
                     <Buttons>
                         <ButtonSolid
-                            onPress={this.resetNagivateToItens}
+                            onPress={this.concluirAdicaoItens}
                             color={color.azul3}
                             title="Concluir"
                         />
                         <ButtonOutline
-                            onPress={this.resetNagivateToItens}
+                            onPress={() => this.resetNagivateToItens()}
                             color={color.azul3}
                             title="Adicionar mais"
                         />
@@ -219,6 +252,8 @@ const style = {
     }
 };
 const mapStateToProps = state => ({
+    comanda: state.comanda.comanda,
+    numero: `nº ${state.comanda.comanda.codigo}`,
     cart: state.cart.map(product => ({
         ...product,
         subtotal: Formatter(
@@ -233,6 +268,7 @@ const mapStateToProps = state => ({
         }, 0)
     )
 });
+
 const mapDispatchToProps = dispatch =>
     bindActionCreators(CartActions, dispatch);
 

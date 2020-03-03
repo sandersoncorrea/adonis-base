@@ -83,9 +83,9 @@ class Itens extends Component {
         this.getProdutos(grupo.codigo);
     };
 
-    resetNagivateToComanda = () => {
+    resetNagivateToDetalhes = () => {
         const { navigation } = this.props;
-        navigation.navigate('Comanda');
+        navigation.navigate('Detalhes');
     };
 
     resetNagivateToDetalhes = () => {
@@ -94,6 +94,7 @@ class Itens extends Component {
     };
 
     render() {
+        const { numero } = this.props;
         return (
             <>
                 <Header
@@ -118,7 +119,7 @@ class Itens extends Component {
                                 fontWeight: 'bold'
                             }}
                         >
-                            nº 96
+                            {numero}
                         </Text>
                     }
                 />
@@ -144,7 +145,7 @@ class Itens extends Component {
                         renderItem={this.renderItem}
                     />
                     <ButtonSolid
-                        onPress={this.resetNagivateToComanda}
+                        onPress={this.resetNagivateToDetalhes}
                         color={color.azul3}
                         title="Fechar Pedido"
                     />
@@ -175,7 +176,10 @@ class Itens extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    numero: `nº ${state.comanda.comanda.codigo}`
+});
 const mapDispatchToProps = dispatch =>
     bindActionCreators(CartActions, dispatch);
 
-export default connect(null, mapDispatchToProps)(Itens);
+export default connect(mapStateToProps, mapDispatchToProps)(Itens);

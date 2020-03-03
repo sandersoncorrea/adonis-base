@@ -1,73 +1,25 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { Text, FlatList } from 'react-native';
 import { Container, TotalView, Total, Value, Desc, Footer } from './styles';
 import { ListItem, Button } from 'react-native-elements';
 import color from '../../styles/palletecolor';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Header } from '../../components';
+import { parseISO, formatRelative } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
+import { Formatter } from '../../utils/str';
+import api from '../../services/api';
 
-const list = [
-    {
-        name: 'Cerveja Skol 350ml',
-        value: 'R$ 19,98',
-        desc: '2 x R$ 9,99'
-    },
-    {
-        name: 'Cerveja Skol 500ml',
-        value: 'R$ 74,95',
-        desc: '5 x 14,99'
-    },
-    {
-        name: 'Cerveja Skol 350ml',
-        value: 'R$ 19,98',
-        desc: '2 x R$ 9,99'
-    },
-    {
-        name: 'Cerveja Skol 350ml',
-        value: 'R$ 19,98',
-        desc: '2 x R$ 9,99'
-    },
-    {
-        name: 'Cerveja Skol 500ml',
-        value: 'R$ 74,95',
-        desc: '5 x 14,99'
-    },
-    {
-        name: 'Cerveja Skol 350ml',
-        value: 'R$ 19,98',
-        desc: '2 x R$ 9,99'
-    },
-    {
-        name: 'Cerveja Skol 500ml',
-        value: 'R$ 74,95',
-        desc: '5 x 14,99'
-    },
-    {
-        name: 'Cerveja Skol 350ml',
-        value: 'R$ 19,98',
-        desc: '2 x R$ 9,99'
-    },
-    {
-        name: 'Cerveja Skol 500ml',
-        value: 'R$ 74,95',
-        desc: '5 x 14,99'
-    },
-    {
-        name: 'Cerveja Skol 350ml',
-        value: 'R$ 19,98',
-        desc: '2 x R$ 9,99'
-    },
-    {
-        name: 'Cerveja Skol 500ml',
-        value: 'R$ 74,95',
-        desc: '5 x 14,99'
-    }
-];
+import { connect } from 'react-redux';
 
 class Comanda extends Component {
     state = {
-        grupos: []
+        itens: []
     };
+
+    UNSAFE_componentWillMount() {
+        this.getItens();
+    }
 
     resetNagivateToItens = () => {
         const { navigation } = this.props;
@@ -81,16 +33,26 @@ class Comanda extends Component {
 
     keyExtractor = (item, index) => index.toString();
 
+    getItens = async () => {
+        const { comanda } = this.props;
+        const response = await api.get(`/davpreitens/${comanda.codigo}`);
+        this.setState({ ...this.state, itens: response.data });
+    };
+
     renderItem = ({ item }) => (
         <ListItem
-            title={item.name}
-            rightTitle={item.value}
-            rightSubtitle={item.desc}
+            title={item.estoque.nome}
+            rightTitle={Formatter('M', parseFloat(item.quant * item.unitario))}
+            rightSubtitle={`${item.quant} x ${Formatter(
+                'M',
+                parseFloat(item.unitario)
+            )}`}
             bottomDivider
         />
     );
 
     render() {
+        const { numero, entrada, total, comanda } = this.props;
         return (
             <>
                 <Header
@@ -115,7 +77,7 @@ class Comanda extends Component {
                                 fontWeight: 'bold'
                             }}
                         >
-                            nº 96
+                            {numero}
                         </Text>
                     }
                 />
@@ -123,13 +85,13 @@ class Comanda extends Component {
                     <TotalView>
                         <Text>total do pedido</Text>
                         <Total>
-                            <Value>R$ 94,95</Value>
-                            <Desc>Entrada: Hoje, 21:53</Desc>
+                            <Value>{total}</Value>
+                            <Desc>{entrada}</Desc>
                         </Total>
                     </TotalView>
                     <FlatList
                         keyExtractor={this.keyExtractor}
-                        data={list}
+                        data={this.state.itens}
                         renderItem={this.renderItem}
                     />
                     <Footer>
@@ -159,4 +121,15 @@ class Comanda extends Component {
     }
 }
 
-export default Comanda;
+const mapStateToProps = state => ({
+    comanda: state.comanda.comanda,
+    numero: `nº ${state.comanda.comanda.codigo}`,
+    entrada: `${formatRelative(
+        parseISO(state.comanda.comanda.emissao),
+        new Date(),
+        { locale: ptBR }
+    )}`,
+    total: Formatter('M', parseFloat(state.comanda.comanda.total))
+});
+
+export default connect(mapStateToProps)(Comanda);

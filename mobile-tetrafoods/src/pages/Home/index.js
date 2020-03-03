@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as ComandaActions from '../../store/modules/comanda/actions';
+
 import { Button } from 'react-native-elements';
 import { Container, Input, Title } from './styles';
 import color from '../../styles/palletecolor';
@@ -14,8 +18,9 @@ class Home extends Component {
         };
     }
 
-    resetNagivateToComanda = () => {
-        const { navigation } = this.props;
+    resetNagivateToComanda = codigo => {
+        const { navigation, addComandaRequest } = this.props;
+        addComandaRequest(codigo);
         navigation.navigate('Comanda');
     };
 
@@ -62,7 +67,9 @@ class Home extends Component {
                         disabled={this.state.comanda == ''}
                         color={color.azul3}
                         title="OK"
-                        onPress={this.resetNagivateToComanda}
+                        onPress={() =>
+                            this.resetNagivateToComanda(this.state.comanda)
+                        }
                     />
                 </Container>
             </>
@@ -70,4 +77,11 @@ class Home extends Component {
     }
 }
 
-export default Home;
+const mapStateToProps = state => ({
+    comanda: state.comanda
+});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(ComandaActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

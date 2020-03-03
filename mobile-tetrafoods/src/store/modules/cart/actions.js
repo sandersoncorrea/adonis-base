@@ -19,3 +19,7 @@ export function updateQuantidade(codigo, quantidade) {
         quantidade
     };
 }
+
+export function cleanCart() {
+    return { type: 'CLEAN_CART' };
+}
