@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 module.exports = {
   /*
@@ -17,6 +17,7 @@ module.exports = {
   |
   */
   origin: false,
+  // origin: ['hospedagem_1.com', 'hospedagem_2.com.br']
 
   /*
   |--------------------------------------------------------------------------
@@ -83,5 +84,5 @@ module.exports = {
   | Define Access-Control-Allow-Max-Age
   |
   */
-  maxAge: 90
-}
+  maxAge: 90,
+};
