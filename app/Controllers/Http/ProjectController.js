@@ -84,7 +84,7 @@ class ProjectController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {
+  async destroy({ params }) {
     const project = await Project.findOrFail(params.id);
     await project.delete();
   }
